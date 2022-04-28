@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-function App() {
+function IndexRoute() {
+  const navigate = useNavigate();
+
   const [users, setUsers] = useState([])
 
   const fetchUsers = async () => {
@@ -13,10 +16,14 @@ function App() {
     fetchUsers()
   }, [])
 
+  const NavigateToUser = (id) => {
+      navigate("/user/" + id)
+  }
+
   return (
     <div className="App">
       <div className="w-full bg-green-600 text-white p-3 text-4xl flex justify-center">
-        <h1>Adam - A - För - Aktiv</h1>
+        <h1>All Users</h1>
       </div>
       
       <div className="w-full">
@@ -30,7 +37,7 @@ function App() {
           </thead>
           <tbody>
             {users.map((user) => (
-              <tr className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700">
+              <tr key={user.id} onClick={() => NavigateToUser(user.id)} className="hover:bg-gray-200 hover:cursor-pointer border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700">
                 <td className="px-6 py-4">{user.id}</td>
                 <td className="px-6 py-4">{user.name}</td>
                 <td className="px-6 py-4">{user.email}</td>
@@ -44,4 +51,4 @@ function App() {
   );
 }
 
-export default App;
+export default IndexRoute;
